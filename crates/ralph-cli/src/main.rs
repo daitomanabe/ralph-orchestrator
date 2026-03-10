@@ -1742,24 +1742,35 @@ async fn run_command(
         .await?
     };
 
-    // Handle restart: exec-replace current process with same CLI args
+    // Handle restart: run required single-command restart sequence.
     if matches!(reason, TerminationReason::RestartRequested) {
         let restart_path = std::path::Path::new(&workspace_root).join(".ralph/restart-requested");
         let _ = std::fs::remove_file(&restart_path);
-        info!("Restart requested — exec-replacing process");
 
         #[cfg(unix)]
         {
-            use std::os::unix::process::CommandExt;
-            let args: Vec<String> = std::env::args().collect();
-            let err = std::process::Command::new(&args[0]).args(&args[1..]).exec();
-            // exec() only returns on error
-            anyhow::bail!("Failed to exec-replace process: {}", err);
+            let pid = std::process::id();
+            let restart_cmd = format!(
+                "kill {pid} && RALPH_DIAGNOSTICS=1 cargo run --bin ralph -- resume -c ralph.test.yml"
+            );
+            info!(
+                "Restart requested — launching single-command restart: {}",
+                restart_cmd
+            );
+
+            std::process::Command::new("sh")
+                .arg("-lc")
+                .arg(&restart_cmd)
+                .spawn()
+                .with_context(|| format!("Failed to spawn restart command: {}", restart_cmd))?;
+
+            // Shell command takes over restarting this loop after kill.
+            return Ok(());
         }
 
         #[cfg(not(unix))]
         {
-            anyhow::bail!("Restart via exec-replace is only supported on Unix");
+            anyhow::bail!("Restart via single-command shell restart is only supported on Unix");
         }
     }
 
