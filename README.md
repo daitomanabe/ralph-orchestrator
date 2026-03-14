@@ -7,6 +7,7 @@
 [![Coverage](https://img.shields.io/badge/coverage-65%25-yellowgreen)](coverage/index.html)
 [![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://mikeyobrien.github.io/ralph-orchestrator/)
+[![Discord](https://img.shields.io/discord/1482421188700667906?label=Discord&logo=discord&logoColor=white)](https://discord.gg/XWUyeUNffh)
 
 A hat-based orchestration framework that keeps AI agents in a loop until the task is done.
 
@@ -184,6 +185,13 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 ## License
 
 MIT License — See [LICENSE](LICENSE) for details.
+
+## 💬 Community & Support
+
+Join the **ralph-orchestrator** community to discuss AI agent patterns, get help with your implementation, or contribute to the roadmap.
+
+* **Discord**: [Join our server](https://discord.gg/XWUyeUNffh) to chat with the maintainers and other users in real-time.
+* **GitHub Issues**: For bug reports and formal feature requests, please use the [Issue Tracker](https://github.com/mikeyobrien/ralph-orchestrator/issues).
 
 ## Acknowledgments
 
